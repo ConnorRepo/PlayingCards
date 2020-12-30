@@ -18,17 +18,18 @@ public class CycleDeck {
 
    private MyCardDrawer drawCard = new MyCardDrawer();
 
-   public void playGame(JFrame base, JPanel background) {
+   public void next() {
       cards.setLayout(new BorderLayout());
 
       for (int i = 1; i < 53; i++) {
          cards.add(drawCard.paintCard(i));
+         cards.repaint();
+         cards.setBounds(250, 10, 200, 300);
+         PlayingCards.test.getBackground().remove(cards);
+         PlayingCards.test.getBackground().repaint();
+         PlayingCards.test.getBackground().add(cards);
 
-         background.remove(cards);
-         background.repaint();
-         background.add(cards);
-
-         base.pack();
+         PlayingCards.test.getBase().pack();
 
          try {
             TimeUnit.MILLISECONDS.sleep(500);

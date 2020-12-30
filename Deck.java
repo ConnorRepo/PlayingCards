@@ -1,4 +1,5 @@
 
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,19 +12,39 @@ import java.awt.event.ActionListener;
  */
 
 public class Deck {
+   private int[] deck = new int[52];
+   private int[] oldDeck = new int[52];
+   private MyCardDrawer drawer = new MyCardDrawer();
+   private int rand = 0;
 
-   static JFrame base = new JFrame();
-   static JPanel background = new JPanel();
+   //Unbox the Deck
+   public int[] unbox() {
+      for(int i = 1; i < deck.length; i++) {
+         deck[i] = i;
+         oldDeck[i] = i;
+      }
+      return deck;
+   }
+   //Draw a card
+   public JPanel drawCard(int card) {
+      return drawer.paintCard(card);
+   }
+   //Shuffle the deck
+   public int[] shuffle(int[] currDeck) {
+      //store the current deck state
+      for(int i = 0; i < 52; i++) {
+         oldDeck[i] = currDeck[i];
+      }
+      //randomly rearrange the values in the deck
+      for(int i = 0; i < 52; i++) {
+         do {
+            rand = ((int) (Math.random() * 52));
+         } while (oldDeck[rand] == 0);
 
-   public static void main(String[] args) {   
-      background.setPreferredSize(new Dimension(1000, 800));
-      background.setBackground(Color.gray);
-
-      base.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      base.getContentPane().add(background);
-      base.setVisible(true);
-
-      CycleDeck test = new CycleDeck();
-      test.playGame(base, background);
+         currDeck[i] = oldDeck[rand];
+         oldDeck[rand] = 0;
+               //Random number between 1 and 52 to choose card
+      }
+      return currDeck;
    }
 }
